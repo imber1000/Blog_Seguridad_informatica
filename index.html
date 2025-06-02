@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog de Seguridad Informática</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-shield-alt me-2"></i>BlogSeguridad
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            Categorías
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" data-category="tendencias">Tendencias</a></li>
+                            <li><a class="dropdown-item" href="#" data-category="nuevas-tecnologias">Nuevas Tecnologías</a></li>
+                            <li><a class="dropdown-item" href="#" data-category="noticias-delitos">Noticias de Delitos</a></li>
+                            <li><a class="dropdown-item" href="#" data-category="tips">Tips</a></li>
+                            <li><a class="dropdown-item" href="#" data-category="software">Software</a></li>
+                            <li><a class="dropdown-item" href="#" data-category="hardware">Hardware</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#aboutModal">Acerca de</a>
+                    </li>
+                </ul>
+                <div class="d-flex" id="authButtons">
+                    <button class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                    </button>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">
+                        <i class="fas fa-user-plus"></i> Registrarse
+                    </button>
+                </div>
+                <div class="d-flex align-items-center d-none" id="userSection">
+                    <span class="text-light me-3" id="usernameDisplay"></span>
+                    <button class="btn btn-success me-2" id="createPostBtn">
+                        <i class="fas fa-plus"></i> Nuevo Post
+                    </button>
+                    <button class="btn btn-outline-light" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <h2 class="mb-4">Últimas Publicaciones</h2>
+                <div id="postsContainer">
+                    <!-- Posts will be loaded here -->
+                    <div class="text-center py-5">
+                        <i class="fas fa-blog fa-3x mb-3 text-muted"></i>
+                        <h4 class="text-muted">No hay publicaciones disponibles</h4>
+                        <p class="text-muted">Inicia sesión para crear la primera publicación</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Categorías</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="#" class="badge bg-primary text-decoration-none" data-category="tendencias">Tendencias</a>
+                            <a href="#" class="badge bg-secondary text-decoration-none" data-category="nuevas-tecnologias">Nuevas Tecnologías</a>
+                            <a href="#" class="badge bg-success text-decoration-none" data-category="noticias-delitos">Noticias de Delitos</a>
+                            <a href="#" class="badge bg-danger text-decoration-none" data-category="tips">Tips</a>
+                            <a href="#" class="badge bg-warning text-dark text-decoration-none" data-category="software">Software</a>
+                            <a href="#" class="badge bg-info text-dark text-decoration-none" data-category="hardware">Hardware</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Sobre el Blog</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Este blog está dedicado a compartir información actualizada sobre seguridad informática, protegiendo tu vida digital.</p>
+                        <p class="mb-0">Regístrate para publicar contenido y participar en la comunidad.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Iniciar Sesión</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Registrarse</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="registerName" class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" id="registerName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="registerEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerConfirmPassword" class="form-label">Confirmar Contraseña</label>
+                            <input type="password" class="form-control" id="registerConfirmPassword" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Registrarse</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Post Modal -->
+    <div class="modal fade" id="createPostModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Nueva Publicación</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createPostForm">
+                        <div class="mb-3">
+                            <label for="postTitle" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="postTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="postCategory" class="form-label">Categoría</label>
+                            <select class="form-select" id="postCategory" required>
+                                <option value="">Selecciona una categoría</option>
+                                <option value="tendencias">Tendencias</option>
+                                <option value="nuevas-tecnologias">Nuevas Tecnologías</option>
+                                <option value="noticias-delitos">Noticias de Delitos</option>
+                                <option value="tips">Tips</option>
+                                <option value="software">Software</option>
+                                <option value="hardware">Hardware</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="postImage" class="form-label">
+                                <i class="fas fa-image me-1"></i> Imagen de la publicación
+                            </label>
+                            <input type="file" class="form-control" id="postImage" accept="image/jpeg, image/png, image/webp">
+                            <div class="form-text">
+                                <i class="fas fa-info-circle me-1"></i> La imagen se subirá a nuestro servidor de imágenes y será visible para todos los usuarios. Máx. 5MB.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="postContent" class="form-label">Contenido</label>
+                            <textarea class="form-control" id="postContent" rows="10" required></textarea>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="button" class="btn btn-secondary me-md-2" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Publicar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Post Modal -->
+    <div class="modal fade" id="editPostModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title">Editar Publicación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editPostForm">
+                        <input type="hidden" id="editPostId">
+                        <div class="mb-3">
+                            <label for="editPostTitle" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="editPostTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPostCategory" class="form-label">Categoría</label>
+                            <select class="form-select" id="editPostCategory" required>
+                                <option value="tendencias">Tendencias</option>
+                                <option value="nuevas-tecnologias">Nuevas Tecnologías</option>
+                                <option value="noticias-delitos">Noticias de Delitos</option>
+                                <option value="tips">Tips</option>
+                                <option value="software">Software</option>
+                                <option value="hardware">Hardware</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPostImage" class="form-label">
+                                <i class="fas fa-image me-1"></i> Cambiar imagen
+                            </label>
+                            <input type="file" class="form-control" id="editPostImage" accept="image/jpeg, image/png, image/webp">
+                            <div class="form-text">
+                                <i class="fas fa-info-circle me-1"></i> Selecciona una nueva imagen para reemplazar la actual. Se actualizará en todas partes.
+                            </div>
+                            <div id="currentImageContainer" class="mt-2"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPostContent" class="form-label">Contenido</label>
+                            <textarea class="form-control" id="editPostContent" rows="10" required></textarea>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="button" class="btn btn-danger me-md-2" id="deletePostBtn">Eliminar</button>
+                            <button type="button" class="btn btn-secondary me-md-2" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-warning">Guardar Cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Post Detail Modal -->
+    <div class="modal fade" id="postDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="postDetailTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge bg-primary" id="postDetailCategory"></span>
+                        <small class="text-muted" id="postDetailDate"></small>
+                    </div>
+                    <div class="text-center mb-4">
+                        <img src="" alt="Post image" class="img-fluid rounded mb-3 d-none" id="postDetailImage">
+                    </div>
+                    <div id="postDetailContent"></div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <small class="text-muted">Publicado por: <span id="postDetailAuthor"></span></small>
+                        <div id="postActions" class="d-none">
+                            <button class="btn btn-sm btn-warning me-2" id="editPostDetailBtn">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button class="btn btn-sm btn-danger" id="deletePostDetailBtn">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal fade" id="aboutModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Acerca del Blog</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h4>Blog de Seguridad Informática</h4>
+                    <p>Este blog está diseñado para compartir información actualizada sobre todos los aspectos de la seguridad informática.</p>
+                    <p>Características principales:</p>
+                    <ul>
+                        <li>Publicaciones organizadas por categorías</li>
+                        <li>Sistema de registro y autenticación de usuarios</li>
+                        <li>Creación, edición y eliminación de publicaciones</li>
+                        <li>Interfaz responsive y moderna</li>
+                    </ul>
+                    <p class="mb-0">¡Únete a nuestra comunidad y comparte tus conocimientos!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-shield-alt me-2"></i>BlogSeguridad</h5>
+                    <p class="mb-0">Tu fuente confiable de información sobre seguridad informática.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Enlaces</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">Inicio</a></li>
+                        <li><a href="#" class="text-white" data-bs-toggle="modal" data-bs-target="#aboutModal">Acerca de</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contacto</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope me-2"></i> contacto@blogseguridad.com</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 Blog de Seguridad Informática. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+</html>
